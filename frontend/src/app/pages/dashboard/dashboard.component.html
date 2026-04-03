@@ -1,0 +1,77 @@
+<div class="dashboard-page">
+  <h1>📊 Dashboard</h1>
+
+  <!-- KPI CARDS -->
+  <div class="kpi-grid" *ngIf="stats">
+    <div class="kpi-card blue">
+      <span class="kpi-icon">📦</span>
+      <div>
+        <p class="kpi-label">Total Productos</p>
+        <p class="kpi-value">{{ getTotalProducts() }}</p>
+      </div>
+    </div>
+    <div class="kpi-card green">
+      <span class="kpi-icon">💰</span>
+      <div>
+        <p class="kpi-label">Valor Total Inventario</p>
+        <p class="kpi-value">${{ getTotalValue() | number:'1.2-2' }}</p>
+      </div>
+    </div>
+    <div class="kpi-card red">
+      <span class="kpi-icon">⚠️</span>
+      <div>
+        <p class="kpi-label">Alertas Stock Bajo</p>
+        <p class="kpi-value">{{ stats.low_stock_alerts.length }}</p>
+      </div>
+    </div>
+    <div class="kpi-card purple">
+      <span class="kpi-icon">🔄</span>
+      <div>
+        <p class="kpi-label">Categorías Activas</p>
+        <p class="kpi-value">{{ stats.by_category.length }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- GRÁFICAS ROW 1 -->
+  <div class="charts-grid" *ngIf="stats">
+    <div class="chart-card">
+      <h3>Productos por Categoría</h3>
+      <canvas #categoryChart></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Valor del Inventario por Categoría</h3>
+      <canvas #valueChart></canvas>
+    </div>
+  </div>
+
+  <!-- GRÁFICA ROW 2 -->
+  <div class="chart-card full" *ngIf="stats">
+    <h3>Movimientos por Mes (Entradas vs Salidas)</h3>
+    <canvas #monthChart></canvas>
+  </div>
+
+  <!-- ALERTAS STOCK BAJO -->
+  <div class="alerts-card" *ngIf="stats && stats.low_stock_alerts.length > 0">
+    <h3>⚠️ Productos con Stock Bajo</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Stock Actual</th>
+          <th>Stock Mínimo</th>
+          <th>Categoría</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of stats.low_stock_alerts">
+          <td>{{ p.name }}</td>
+          <td class="danger">{{ p.stock }}</td>
+          <td>{{ p.min_stock }}</td>
+          <td>{{ p.category }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

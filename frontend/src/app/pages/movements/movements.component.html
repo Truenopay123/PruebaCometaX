@@ -1,0 +1,77 @@
+<div class="movements-page">
+
+  <div class="page-header">
+    <h1>🔄 Movimientos</h1>
+    <button class="btn-primary" (click)="openForm()">+ Registrar Movimiento</button>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" *ngIf="showForm" (click)="closeForm()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <h2>Registrar Movimiento</h2>
+
+      <div class="form-group">
+        <label>Producto</label>
+        <select [(ngModel)]="form.product_id">
+          <option value="">Selecciona un producto</option>
+          <option *ngFor="let p of products" [value]="p.id">
+            {{ p.name }} (Stock: {{ p.stock }})
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Tipo</label>
+        <select [(ngModel)]="form.type">
+          <option value="entry">📥 Entrada</option>
+          <option value="exit">📤 Salida</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Cantidad</label>
+        <input type="number" [(ngModel)]="form.quantity" min="1" />
+      </div>
+
+      <div class="form-group">
+        <label>Nota</label>
+        <input [(ngModel)]="form.note" placeholder="Ej. Compra a proveedor" />
+      </div>
+
+      <div class="form-actions">
+        <button class="btn-primary" (click)="saveMovement()">Registrar</button>
+        <button (click)="closeForm()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLA -->
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Tipo</th>
+          <th>Cantidad</th>
+          <th>Nota</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let m of movements">
+          <td>{{ getProductName(m.product_id) }}</td>
+          <td>
+            <span class="type-badge" [class.entry]="m.type === 'entry'"
+                  [class.exit]="m.type === 'exit'">
+              {{ m.type === 'entry' ? '📥 Entrada' : '📤 Salida' }}
+            </span>
+          </td>
+          <td>{{ m.quantity }}</td>
+          <td>{{ m.note || '—' }}</td>
+          <td>{{ m.date | date:'dd/MM/yyyy HH:mm' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

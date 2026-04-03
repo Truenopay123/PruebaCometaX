@@ -1,0 +1,91 @@
+<div class="products-page">
+
+  <div class="page-header">
+    <h1>🗂️ Productos</h1>
+    <button class="btn-primary" (click)="openForm()">+ Nuevo Producto</button>
+  </div>
+
+  <!-- MODAL FORMULARIO -->
+  <div class="modal-overlay" *ngIf="showForm" (click)="closeForm()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <h2>{{ editingId ? 'Editar Producto' : 'Nuevo Producto' }}</h2>
+
+      <div class="form-group">
+        <label>Nombre</label>
+        <input [(ngModel)]="form.name" placeholder="Ej. Laptop Dell" />
+      </div>
+
+      <div class="form-group">
+        <label>Categoría</label>
+        <select [(ngModel)]="form.category">
+          <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Precio</label>
+          <input type="number" [(ngModel)]="form.price" placeholder="0.00" />
+        </div>
+        <div class="form-group">
+          <label>Stock</label>
+          <input type="number" [(ngModel)]="form.stock" placeholder="0" />
+        </div>
+        <div class="form-group">
+          <label>Stock Mínimo</label>
+          <input type="number" [(ngModel)]="form.min_stock" placeholder="10" />
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn-primary" (click)="saveProduct()">
+          {{ editingId ? 'Actualizar' : 'Crear' }}
+        </button>
+        <button (click)="closeForm()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLA -->
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Categoría</th>
+          <th>Precio</th>
+          <th>Stock</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products"
+            [class.low-stock]="isLowStock(product)"
+            [class.inactive]="!product.is_active">
+          <td>
+            {{ product.name }}
+            <span class="badge-warning" *ngIf="isLowStock(product)">⚠️ Stock bajo</span>
+          </td>
+          <td><span class="badge">{{ product.category }}</span></td>
+          <td>${{ product.price | number:'1.2-2' }}</td>
+          <td>{{ product.stock }}</td>
+          <td>
+            <span class="status-badge" [class.active]="product.is_active"
+                  [class.inactive-badge]="!product.is_active">
+              {{ product.is_active ? 'Activo' : 'Inactivo' }}
+            </span>
+          </td>
+          <td class="actions">
+            <button class="btn-primary" (click)="openForm(product)">✏️</button>
+            <button class="btn-warning" (click)="toggleStatus(product)">
+              {{ product.is_active ? '⛔' : '✅' }}
+            </button>
+            <button class="btn-danger" (click)="deleteProduct(product.id!)">🗑️</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

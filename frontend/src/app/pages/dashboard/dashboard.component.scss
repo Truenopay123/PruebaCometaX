@@ -1,0 +1,118 @@
+.dashboard-page {
+  max-width: 1200px;
+  margin: 0 auto;
+
+  h1 {
+    font-size: 1.6rem;
+    color: #1e293b;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.kpi-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  border-left: 4px solid transparent;
+
+  &.blue  { border-color: #3b82f6; .kpi-icon { background: #eff6ff; } }
+  &.green { border-color: #10b981; .kpi-icon { background: #f0fdf4; } }
+  &.red   { border-color: #ef4444; .kpi-icon { background: #fef2f2; } }
+  &.purple{ border-color: #8b5cf6; .kpi-icon { background: #f5f3ff; } }
+
+  .kpi-icon {
+    font-size: 1.8rem;
+    padding: 0.5rem;
+    border-radius: 10px;
+  }
+
+  .kpi-label {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-bottom: 0.2rem;
+  }
+
+  .kpi-value {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #1e293b;
+  }
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.chart-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+
+  &.full {
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    font-size: 1rem;
+    color: #1e293b;
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+
+  canvas {
+    max-height: 280px;
+  }
+}
+
+.alerts-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  border-left: 4px solid #f59e0b;
+
+  h3 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: #92400e;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th {
+      background: #fff7ed;
+      color: #92400e;
+      padding: 0.75rem 1rem;
+      text-align: left;
+      font-size: 0.85rem;
+    }
+
+    td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #fef3c7;
+      font-size: 0.9rem;
+
+      &.danger {
+        color: #ef4444;
+        font-weight: 700;
+      }
+    }
+  }
+}
